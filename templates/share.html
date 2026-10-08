@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Share File | Secure Cloud Data Sharing</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================== */
+
+        .topbar {
+            height: 72px;
+            background: #0f172a;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            background: #2563eb;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        .brand h1 {
+            font-size: 17px;
+        }
+
+
+        .brand p {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+
+        .dashboard-link {
+            color: #cbd5e1;
+            text-decoration: none;
+
+            font-size: 13px;
+
+            padding: 9px 14px;
+
+            border: 1px solid #334155;
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .dashboard-link:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+
+        .page-heading h2 {
+            color: #0f172a;
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+
+        .page-heading p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
+        .share-card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+
+            padding: 35px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+
+        label {
+            display: block;
+
+            color: #334155;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+
+        .label-description {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: normal;
+            margin-top: 3px;
+        }
+
+
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            background: white;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+
+            color: #334155;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        select:hover {
+            border-color: #94a3b8;
+        }
+
+
+        select:focus {
+            outline: none;
+
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px #dbeafe;
+        }
+
+
+        /* =========================
+           SHARE PREVIEW
+        ========================== */
+
+        .sharing-flow {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 18px;
+
+            margin: 5px 0 30px;
+
+            padding: 18px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 10px;
+        }
+
+
+        .flow-item {
+            text-align: center;
+        }
+
+
+        .flow-icon {
+
+            width: 44px;
+            height: 44px;
+
+            margin: 0 auto 7px;
+
+            border-radius: 10px;
+
+            background: #dbeafe;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .flow-item p {
+            color: #475569;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .flow-arrow {
+            color: #94a3b8;
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================== */
+
+        .share-button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .share-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        .share-button:active {
+            transform: translateY(1px);
+        }
+
+
+        /* =========================
+           SECURITY FEATURES
+        ========================== */
+
+        .security-section {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+
+        .security-card {
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 9px;
+
+            padding: 17px;
+        }
+
+
+        .security-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+
+        .security-card h4 {
+
+            color: #0f172a;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .security-card p {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           SECURITY NOTICE
+        ========================== */
+
+        .security-message {
+
+            margin-top: 22px;
+
+            padding: 14px 16px;
+
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+
+            border-left: 4px solid #16a34a;
+
+            border-radius: 7px;
+
+            color: #166534;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           BACK LINK
+        ========================== */
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 22px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+
+            .share-card {
+                padding: 22px;
+            }
+
+
+            .security-section {
+                grid-template-columns: 1fr;
+            }
+
+
+            .sharing-flow {
+                gap: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .brand p {
+                display: none;
+            }
+
+
+            .brand h1 {
+                font-size: 15px;
+            }
+
+
+            .dashboard-link {
+                font-size: 11px;
+                padding: 8px 10px;
+            }
+
+
+            .page-heading h2 {
+                font-size: 21px;
+            }
+
+
+            .sharing-flow {
+                flex-direction: column;
+            }
+
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🔗
+            </div>
+
+            <div>
+
+                <h1>Secure Cloud Data Sharing</h1>
+
+                <p>Secure File Management</p>
+
+            </div>
+
+        </div>
+
+
+        <a href="/dashboard" class="dashboard-link">
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="container">
+
+
+        <div class="page-heading">
+
+            <h2>Share File</h2>
+
+            <p>
+                Securely share your encrypted files with authorized users.
+            </p>
+
+        </div>
+
+
+
+        <section class="share-card">
+
+
+            <!-- Sharing Flow -->
+
+            <div class="sharing-flow">
+
+                <div class="flow-item">
+
+                    <div class="flow-icon">
+                        📄
+                    </div>
+
+                    <p>Your File</p>
+
+                </div>
+
+
+                <div class="flow-arrow">
+                    →
+                </div>
+
+
+                <div class="flow-item">
+
+                    <div class="flow-icon">
+                        🔐
+                    </div>
+
+                    <p>Access Control</p>
+
+                </div>
+
+
+                <div class="flow-arrow">
+                    →
+                </div>
+
+
+                <div class="flow-item">
+
+                    <div class="flow-icon">
+                        👤
+                    </div>
+
+                    <p>Authorized User</p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 SHARE FORM
+            ========================== -->
+
+            <form method="POST">
+
+
+                <!-- Select File -->
+
+                <div class="form-group">
+
+                    <label>
+                        Select File
+
+                        <div class="label-description">
+                            Choose one of your encrypted files.
+                        </div>
+
+                    </label>
+
+
+                    <select
+                        name="file_id"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select File --
+                        </option>
+
+
+                        {% for file in files %}
+
+                        <option value="{{ file[0] }}">
+                            {{ file[1] }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Share With -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Share With
+
+                        <div class="label-description">
+                            Select the user who should receive access.
+                        </div>
+
+                    </label>
+
+
+                    <select
+                        name="shared_with_id"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select User --
+                        </option>
+
+
+                        {% for user in users %}
+
+                        <option value="{{ user[0] }}">
+                            {{ user[1] }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Permission -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Permission
+
+                        <div class="label-description">
+                            Define what the recipient can do with the file.
+                        </div>
+
+                    </label>
+
+
+                    <select
+                        name="permission"
+                    >
+
+                        <option value="read">
+                            Read / Download
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Duration -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Access Duration
+
+                        <div class="label-description">
+                            Access automatically expires after this period.
+                        </div>
+
+                    </label>
+
+
+                    <select
+                        name="duration"
+                    >
+
+                        <option value="1">
+                            1 Hour
+                        </option>
+
+                        <option value="6">
+                            6 Hours
+                        </option>
+
+                        <option value="24">
+                            24 Hours
+                        </option>
+
+                        <option value="72">
+                            3 Days
+                        </option>
+
+                        <option value="168">
+                            7 Days
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="share-button"
+                >
+
+                    🔗 Share File Securely
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- =========================
+                 SECURITY FEATURES
+            ========================== -->
+
+            <div class="security-section">
+
+
+                <div class="security-card">
+
+                    <div class="security-icon">
+                        🔐
+                    </div>
+
+                    <h4>
+                        Encrypted Storage
+                    </h4>
+
+                    <p>
+                        Files remain encrypted while stored in the system.
+                    </p>
+
+                </div>
+
+
+
+                <div class="security-card">
+
+                    <div class="security-icon">
+                        ⏱️
+                    </div>
+
+                    <h4>
+                        Time Limited
+                    </h4>
+
+                    <p>
+                        Shared access automatically expires after the selected duration.
+                    </p>
+
+                </div>
+
+
+
+                <div class="security-card">
+
+                    <div class="security-icon">
+                        🛡️
+                    </div>
+
+                    <h4>
+                        Access Controlled
+                    </h4>
+
+                    <p>
+                        Only the selected authorized user can access the shared file.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- Security Message -->
+
+            <div class="security-message">
+
+                <strong>🔒 Security:</strong>
+
+                Access is controlled using user permissions,
+                expiry time, adaptive risk checks, and access logging.
+
+            </div>
+
+
+
+            <a
+                href="/dashboard"
+                class="back"
+            >
+
+                ← Back to Dashboard
+
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer class="footer">
+
+        Secure Cloud Data Sharing • Secure File Sharing & Access Control
+
+    </footer>
+
+
+</body>
+
+</html>

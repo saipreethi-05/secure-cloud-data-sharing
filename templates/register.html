@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Secure Cloud Data Sharing</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 950px;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .security-panel {
+            background: linear-gradient(145deg, #172554, #1d4ed8);
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-panel::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .security-panel::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            bottom: -180px;
+            left: -150px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .logo h2 {
+            font-size: 18px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #bfdbfe;
+            margin-top: 3px;
+        }
+
+        .security-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .security-content h1 {
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .security-content > p {
+            color: #dbeafe;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 380px;
+            margin-bottom: 30px;
+        }
+
+        .security-features {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .feature span {
+            font-size: 13px;
+            color: #e0ecff;
+        }
+
+        .register-panel {
+            padding: 45px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-header {
+            margin-bottom: 22px;
+        }
+
+        .register-header h2 {
+            font-size: 27px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .register-header p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 10px 13px;
+            border-radius: 7px;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 13px;
+            color: #1e293b;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px #dbeafe;
+        }
+
+        .security-help {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .register-btn {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 4px;
+        }
+
+        .register-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .login-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            margin-top: 22px;
+            padding-top: 17px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        @media (max-width: 750px) {
+
+            .register-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .security-panel {
+                padding: 35px;
+                min-height: 300px;
+            }
+
+            .security-panel .logo {
+                margin-bottom: 25px;
+            }
+
+            .security-content h1 {
+                font-size: 25px;
+            }
+
+            .security-features {
+                display: none;
+            }
+
+            .register-panel {
+                padding: 40px 35px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .security-panel {
+                padding: 30px 25px;
+            }
+
+            .register-panel {
+                padding: 35px 25px;
+            }
+
+            .security-content h1 {
+                font-size: 23px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <section class="security-panel">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🔐
+            </div>
+
+            <div>
+                <h2>Secure Cloud</h2>
+                <p>Data Sharing Platform</p>
+            </div>
+
+        </div>
+
+        <div class="security-content">
+
+            <h1>
+                Create your secure account.
+            </h1>
+
+            <p>
+                Join the secure cloud platform to store,
+                manage and share files with controlled access.
+            </p>
+
+            <div class="security-features">
+
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <span>Secure password authentication</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <span>Adaptive access control</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📁</div>
+                    <span>Secure encrypted file sharing</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="register-panel">
+
+        <div class="register-header">
+
+            <h2>Create Account</h2>
+
+            <p>
+                Create your account to start using
+                Secure Cloud Data Sharing.
+            </p>
+
+        </div>
+
+        {% if message %}
+
+        <div class="message">
+            {{ message }}
+        </div>
+
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">👤</span>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">🔑</span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a secure password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="security_question">
+                    Security Question
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">❓</span>
+
+                    <select
+                        id="security_question"
+                        name="security_question"
+                        required
+                    >
+
+                        <option value="">
+                            Select a security question
+                        </option>
+
+                        <option value="What is your favorite color?">
+                            What is your favorite color?
+                        </option>
+
+                        <option value="What is your favorite food?">
+                            What is your favorite food?
+                        </option>
+
+                        <option value="What is your pet's name?">
+                            What is your pet's name?
+                        </option>
+
+                        <option value="What is your birthplace?">
+                            What is your birthplace?
+                        </option>
+
+                        <option value="What is your school name?">
+                            What is your school name?
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="security_answer">
+                    Security Answer
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">🛡️</span>
+
+                    <input
+                        type="text"
+                        id="security_answer"
+                        name="security_answer"
+                        placeholder="Enter your answer"
+                        required
+                    >
+
+                </div>
+
+                <div class="security-help">
+                    This answer will be used to recover your password if you forget it.
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="register-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="/">
+                Sign in
+            </a>
+
+        </div>
+
+        <div class="security-note">
+
+            🔒 Your password and security answer are securely hashed
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+
+</html>

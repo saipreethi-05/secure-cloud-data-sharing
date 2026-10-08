@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shared With Me | Secure Cloud Data Sharing</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================== */
+
+        .topbar {
+            height: 72px;
+            background: #0f172a;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            background: #2563eb;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        .brand h1 {
+            font-size: 17px;
+        }
+
+
+        .brand p {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+
+        .dashboard-link {
+            color: #cbd5e1;
+            text-decoration: none;
+
+            font-size: 13px;
+
+            padding: 9px 14px;
+
+            border: 1px solid #334155;
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .dashboard-link:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+
+        /* =========================
+           FLASH POPUP
+        ========================== */
+
+        .flash-container {
+            position: fixed;
+            top: 88px;
+            right: 25px;
+
+            z-index: 9999;
+
+            width: 350px;
+
+            animation: slideIn 0.35s ease;
+        }
+
+
+        .flash-message {
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.15);
+
+            border: 1px solid;
+        }
+
+
+        .flash-success {
+            background: #ecfdf5;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+
+
+        .flash-error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+
+
+        .flash-info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+        }
+
+
+        @keyframes slideIn {
+
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+
+        @keyframes fadeOut {
+
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+
+        .page-heading h2 {
+            color: #0f172a;
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+
+        .page-heading p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           FILE CARD
+        ========================== */
+
+        .files-card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            overflow: hidden;
+        }
+
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+
+        .card-title {
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+
+        .file-count {
+            background: #eff6ff;
+            color: #2563eb;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        thead {
+            background: #f8fafc;
+        }
+
+
+        th {
+            text-align: left;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            padding: 13px 14px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            white-space: nowrap;
+        }
+
+
+        td {
+            padding: 15px 14px;
+
+            border-bottom: 1px solid #f1f5f9;
+
+            color: #475569;
+
+            font-size: 12px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+            transition: 0.15s;
+        }
+
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        /* =========================
+           FILE NAME
+        ========================== */
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .file-icon {
+            width: 35px;
+            height: 35px;
+
+            background: #dbeafe;
+
+            color: #2563eb;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            flex-shrink: 0;
+        }
+
+
+        .file-name {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           SHARED BY
+        ========================== */
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .user-icon {
+            width: 29px;
+            height: 29px;
+
+            background: #e0e7ff;
+
+            color: #4338ca;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+        }
+
+
+        .username {
+            color: #475569;
+        }
+
+
+        /* =========================
+           PERMISSION BADGE
+        ========================== */
+
+        .permission-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            padding: 5px 9px;
+
+            background: #ecfdf5;
+
+            color: #15803d;
+
+            border: 1px solid #bbf7d0;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           DOWNLOAD BUTTON
+        ========================== */
+
+        .download-btn {
+            display: inline-block;
+
+            padding: 8px 13px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        .no-permission {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================== */
+
+        .empty-state {
+            text-align: center;
+
+            padding: 65px 20px;
+        }
+
+
+        .empty-icon {
+            width: 65px;
+            height: 65px;
+
+            background: #f1f5f9;
+
+            border-radius: 14px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 29px;
+        }
+
+
+        .empty-state h3 {
+            color: #334155;
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           SECURITY INFORMATION
+        ========================== */
+
+        .security-section {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+
+        .security-card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 10px;
+
+            padding: 16px;
+        }
+
+
+        .security-icon {
+            font-size: 19px;
+            margin-bottom: 7px;
+        }
+
+
+        .security-card h4 {
+            color: #0f172a;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .security-card p {
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           BACK LINK
+        ========================== */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 22px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+
+            .container {
+                margin-top: 30px;
+            }
+
+
+            .files-card {
+                padding: 18px;
+            }
+
+
+            .security-section {
+                grid-template-columns: 1fr;
+            }
+
+
+            .brand p {
+                display: none;
+            }
+
+
+            .flash-container {
+                left: 20px;
+                right: 20px;
+                width: auto;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .brand h1 {
+                font-size: 15px;
+            }
+
+
+            .dashboard-link {
+                font-size: 11px;
+                padding: 8px 10px;
+            }
+
+
+            .page-heading h2 {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         FLASH POPUP
+    ========================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="flash-message
+                        {% if category == 'success' %}
+                            flash-success
+                        {% elif category == 'error' %}
+                            flash-error
+                        {% else %}
+                            flash-info
+                        {% endif %}"
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🔗
+            </div>
+
+            <div>
+
+                <h1>Secure Cloud Data Sharing</h1>
+
+                <p>Secure File Management</p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="/dashboard"
+            class="dashboard-link"
+        >
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="container">
+
+
+        <div class="page-heading">
+
+            <h2>Shared With Me</h2>
+
+            <p>
+                View and securely access files shared with your account.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             FILES CARD
+        ========================== -->
+
+        <section class="files-card">
+
+
+            {% if shared_files %}
+
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Files Shared With Me
+                    </div>
+
+
+                    <div class="file-count">
+
+                        {{ shared_files|length }}
+                        File{% if shared_files|length != 1 %}s{% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    FILE
+                                </th>
+
+                                <th>
+                                    SHARED BY
+                                </th>
+
+                                <th>
+                                    PERMISSION
+                                </th>
+
+                                <th>
+                                    SHARED TIME
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            {% for file in shared_files %}
+
+                            <tr>
+
+
+                                <!-- File -->
+
+                                <td>
+
+                                    <div class="file-info">
+
+                                        <div class="file-icon">
+                                            📄
+                                        </div>
+
+                                        <div class="file-name">
+                                            {{ file[1] }}
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <!-- Shared By -->
+
+                                <td>
+
+                                    <div class="user-info">
+
+                                        <div class="user-icon">
+                                            👤
+                                        </div>
+
+                                        <span class="username">
+                                            {{ file[4] }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <!-- Permission -->
+
+                                <td>
+
+                                    {% if file[5] == "read" %}
+
+                                        <span class="permission-badge">
+                                            ✓ Read / Download
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="no-permission">
+                                            No permission
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- Shared Time -->
+
+                                <td>
+
+                                    {{ file[6] }}
+
+                                </td>
+
+
+
+                                <!-- Action -->
+
+                                <td>
+
+                                    {% if file[5] == "read" %}
+
+                                        <a
+                                            href="/shared-download/{{ file[0] }}"
+                                            class="download-btn"
+                                        >
+                                            ↓ Download
+                                        </a>
+
+                                    {% else %}
+
+                                        <span class="no-permission">
+                                            No permission
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                            </tr>
+
+                            {% endfor %}
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- =========================
+                     EMPTY STATE
+                ========================== -->
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📂
+                    </div>
+
+                    <h3>
+                        No Shared Files
+                    </h3>
+
+                    <p>
+                        No files have been shared with you yet.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+
+        <!-- =========================
+             SECURITY FEATURES
+        ========================== -->
+
+        <div class="security-section">
+
+
+            <div class="security-card">
+
+                <div class="security-icon">
+                    🔐
+                </div>
+
+                <h4>
+                    Secure Access
+                </h4>
+
+                <p>
+                    Shared files are accessed only through authorized routes.
+                </p>
+
+            </div>
+
+
+
+            <div class="security-card">
+
+                <div class="security-icon">
+                    ⏱️
+                </div>
+
+                <h4>
+                    Time Limited
+                </h4>
+
+                <p>
+                    Shared access can automatically expire after its defined duration.
+                </p>
+
+            </div>
+
+
+
+            <div class="security-card">
+
+                <div class="security-icon">
+                    🛡️
+                </div>
+
+                <h4>
+                    Access Monitoring
+                </h4>
+
+                <p>
+                    File access activity is recorded in the security logs.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <a
+            href="/dashboard"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </main>
+
+
+
+    <footer class="footer">
+
+        Secure Cloud Data Sharing • Secure File Access
+
+    </footer>
+
+
+    <!-- =========================
+         POPUP AUTO-HIDE
+    ========================== -->
+
+    <script>
+
+        setTimeout(function() {
+
+            const flashContainer =
+                document.querySelector(".flash-container");
+
+            if (flashContainer) {
+
+                flashContainer.style.animation =
+                    "fadeOut 0.4s ease forwards";
+
+                setTimeout(function() {
+
+                    flashContainer.remove();
+
+                }, 400);
+
+            }
+
+        }, 4000);
+
+    </script>
+
+
+</body>
+
+</html>
