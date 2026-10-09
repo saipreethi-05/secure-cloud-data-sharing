@@ -11,8 +11,10 @@ database/users.db
 # Uploaded/encrypted files
 uploads/*
 
-# Environment variables
-.env
+
 
 # VS Code settings
 .vscode/
+
+.env
+database/database_backup.py
